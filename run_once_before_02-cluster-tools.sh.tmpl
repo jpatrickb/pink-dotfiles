@@ -1,0 +1,37 @@
+{{ if .isHPC -}}
+#!/bin/bash
+# Cluster: no sudo, so everything goes in ~/.local/bin (or ~/.fzf, ~/.atuin).
+# One tool failing does not stop the rest; a summary prints at the end.
+set -u
+BIN="$HOME/.local/bin"; mkdir -p "$BIN"
+export PATH="$BIN:$HOME/.atuin/bin:$HOME/.fzf/bin:$PATH"
+ARCH="$(uname -m)"          # x86_64 or aarch64
+TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"' EXIT
+FAILED=()
+have() { command -v "$1" >/dev/null 2>&1; }
+latest_tag() { curl -sIL -o /dev/null -w '%{url_effective}' "https://github.com/$1/releases/latest" | sed 's|.*/tag/||'; }
+fetch_tar() {  # fetch_tar <url> <binary-name>  -> installs binary into $BIN
+  curl -fsSL "$1" -o "$TMP/t.tgz" && mkdir -p "$TMP/x" && tar -xzf "$TMP/t.tgz" -C "$TMP/x" \
+    && find "$TMP/x" -type f -name "$2" -perm -u+x | head -1 | xargs -I{} install -m755 {} "$BIN/$2"
+}
+step() { local name="$1"; shift; if have "$name"; then echo "✓ $name (already installed)"; else echo "→ installing $name"; "$@" && have "$name" && echo "✓ $name" || { echo "✗ $name failed"; FAILED+=("$name"); }; fi; }
+
+step starship  bash -c 'curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$HOME/.local/bin" >/dev/null'
+step zoxide    bash -c 'curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash >/dev/null'
+step atuin     bash -c 'curl --proto "=https" --tlsv1.2 -LsSf https://github.com/atuinsh/atuin/releases/latest/download/atuin-installer.sh | ATUIN_NO_MODIFY_PATH=1 sh >/dev/null'
+step eza       fetch_tar "https://github.com/eza-community/eza/releases/latest/download/eza_${ARCH}-unknown-linux-musl.tar.gz" eza
+BAT_TAG="$(latest_tag sharkdp/bat)";  step bat   fetch_tar "https://github.com/sharkdp/bat/releases/download/${BAT_TAG}/bat-${BAT_TAG}-${ARCH}-unknown-linux-musl.tar.gz" bat
+DELTA_TAG="$(latest_tag dandavison/delta)"; step delta fetch_tar "https://github.com/dandavison/delta/releases/download/${DELTA_TAG}/delta-${DELTA_TAG}-${ARCH}-unknown-linux-musl.tar.gz" delta
+step fzf       bash -c '[ -d "$HOME/.fzf" ] || git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"; "$HOME/.fzf/install" --bin >/dev/null'
+
+# ble.sh: ghost-text suggestions + syntax highlighting for bash.
+if [ -f "$HOME/.local/share/blesh/ble.sh" ]; then echo "✓ ble.sh (already installed)"; else
+  echo "→ installing ble.sh"
+  if curl -fsSL https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz -o "$TMP/ble.tar.xz" \
+     && tar -xJf "$TMP/ble.tar.xz" -C "$TMP" && bash "$TMP"/ble-nightly/ble.sh --install "$HOME/.local/share" >/dev/null; then
+    echo "✓ ble.sh"; else echo "✗ ble.sh failed"; FAILED+=("ble.sh"); fi
+fi
+
+if [ "${#FAILED[@]}" -gt 0 ]; then echo; echo "Some tools did not install: ${FAILED[*]}"; echo "The shell still works without them; re-run 'chezmoi state delete-bucket --bucket=scriptState && chezmoi apply' to retry."; fi
+exit 0
+{{- end }}

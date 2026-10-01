@@ -1,0 +1,25 @@
+# ── Terminal / colour ──────────────────────────────────────────
+set -g default-terminal "tmux-256color"
+set -ga terminal-overrides ",*256col*:Tc,xterm-256color:Tc"
+
+set -g base-index 1
+set -g pane-base-index 1
+set -g renumber-windows on
+set -g mouse on
+set -g focus-events on
+
+# ── Status bar (pink) ──────────────────────────────────────────
+set -g status-position top
+set -g status-style "bg={{ .theme.statusbar }},fg={{ .theme.wine }}"
+set -g status-left  "#[bg={{ .theme.purple }},fg={{ .theme.os_fg }},bold] #S #[bg={{ .theme.statusbar }},fg={{ .theme.purple }}]  "
+set -g status-right "#[fg={{ .theme.muted }}]#{b:pane_current_path} #[bg={{ .theme.pink }},fg={{ .theme.wine }}] #h #[bg={{ .theme.lavender }},fg={{ .theme.ink }}] %a %H:%M "
+set -g window-status-format         " #I:#W "
+set -g window-status-current-format " #I:#W "
+set -g window-status-style          "fg={{ .theme.muted }}"
+set -g window-status-current-style  "bg={{ .theme.blush }},fg={{ .theme.wine }},bold"
+
+set -g pane-border-style        "fg={{ .theme.blush }}"
+set -g pane-active-border-style "fg={{ .theme.fuchsia }}"
+set -g mode-style               "bg={{ .theme.blush }},fg={{ .theme.wine }}"
+set -g message-style            "bg={{ .theme.lavender }},fg={{ .theme.ink }}"
+set -g message-command-style    "bg={{ .theme.lavender }},fg={{ .theme.ink }}"

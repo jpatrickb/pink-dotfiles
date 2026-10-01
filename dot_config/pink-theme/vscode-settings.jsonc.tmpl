@@ -1,0 +1,31 @@
+// Paste these keys into VS Code: Cmd+Shift+P -> "Preferences: Open User Settings (JSON)".
+// (Install the "Pink" theme by Lucy first: ext install Lucy.vscode-pink)
+{
+  "workbench.colorTheme": "Pink",
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+  "terminal.integrated.fontSize": 13,
+  // Without this VS Code recolours pastel text to hit a 4.5:1 ratio and the prompt pills look wrong.
+  "terminal.integrated.minimumContrastRatio": 1,
+  "workbench.colorCustomizations": {
+    "terminal.background": "{{ .theme.bg }}",
+    "terminal.foreground": "{{ .theme.text }}",
+    "terminalCursor.foreground": "{{ .theme.fuchsia }}",
+    "terminal.selectionBackground": "{{ .theme.blush }}",
+    "terminal.ansiBlack": "{{ .theme.text }}",
+    "terminal.ansiRed": "{{ .theme.hotpink }}",
+    "terminal.ansiGreen": "{{ .theme.ok }}",
+    "terminal.ansiYellow": "{{ .theme.warn }}",
+    "terminal.ansiBlue": "{{ .theme.purple }}",
+    "terminal.ansiMagenta": "{{ .theme.fuchsia }}",
+    "terminal.ansiCyan": "#b0508a",
+    "terminal.ansiWhite": "{{ .theme.surface }}",
+    "terminal.ansiBrightBlack": "{{ .theme.muted }}",
+    "terminal.ansiBrightRed": "#ff0a54",
+    "terminal.ansiBrightGreen": "#2f8f6f",
+    "terminal.ansiBrightYellow": "#c77a1a",
+    "terminal.ansiBrightBlue": "#8e4ec6",
+    "terminal.ansiBrightMagenta": "#d72483",
+    "terminal.ansiBrightCyan": "#cf748b",
+    "terminal.ansiBrightWhite": "#ffffff"
+  }
+}

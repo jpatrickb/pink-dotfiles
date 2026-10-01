@@ -1,0 +1,15 @@
+# ble.sh settings (cluster bash). Colours match the pink theme.
+bleopt term_true_colors=semicolon
+bleopt prompt_ps1_transient=                # leave the prompt alone
+
+ble-face auto_complete='fg={{ .theme.muted }}'                 # ghost-text suggestion
+ble-face command_builtin='fg={{ .theme.ok }}'
+ble-face command_alias='fg={{ .theme.ok }}'
+ble-face command_function='fg={{ .theme.ok }}'
+ble-face command_file='fg={{ .theme.ok }}'
+ble-face command_keyword='fg={{ .theme.purple }}'
+ble-face filename_directory='fg={{ .theme.wine }},underline'
+ble-face argument_option='fg={{ .theme.fuchsia }}'
+ble-face syntax_quoted='fg={{ .theme.warn }}'
+ble-face syntax_comment='fg={{ .theme.muted }}'
+ble-face syntax_error='fg={{ .theme.err }}'

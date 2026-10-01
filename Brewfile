@@ -1,0 +1,12 @@
+# Mac tools. Installed by run_onchange_before_01-mac-brew.sh.tmpl.
+brew "starship"
+brew "atuin"
+brew "eza"
+brew "bat"
+brew "git-delta"
+brew "fzf"
+brew "zoxide"
+brew "tmux"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+cask "font-jetbrains-mono-nerd-font"

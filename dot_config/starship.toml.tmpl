@@ -1,0 +1,97 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+add_newline = false
+
+# Connected rounded "pill" segments: OS / directory / git / language versions /
+# duration. Colours come from .chezmoidata/theme.toml (purple -> pink ->
+# lavender -> blush -> rose). Needs a Nerd Font in the terminal.
+format = """
+$os\
+[](fg:{{ .theme.purple }} bg:{{ .theme.pink }})\
+$directory\
+[](fg:{{ .theme.pink }} bg:{{ .theme.lavender }})\
+$git_branch\
+$git_status\
+[](fg:{{ .theme.lavender }} bg:{{ .theme.blush }})\
+$nodejs\
+$rust\
+$golang\
+$python\
+$conda\
+[](fg:{{ .theme.blush }} bg:{{ .theme.rose }})\
+$cmd_duration\
+[](fg:{{ .theme.rose }})\
+\n$character"""
+
+[os]
+style = "bg:{{ .theme.purple }} fg:{{ .theme.os_fg }}"
+format = "[ $symbol ]($style)"
+disabled = false
+
+[os.symbols]
+Windows = "\U000f0372"
+Ubuntu = "\U000f0548"
+Macos = "\U000f0035"
+Linux = "\U000f033d"
+Fedora = "\U000f08db"
+Debian = "\U000f08da"
+Redhat = "\U000f111b"
+RedHatEnterprise = "\U000f111b"
+RockyLinux = "\U000f111b"
+AlmaLinux = "\U000f111b"
+
+[directory]
+style = "fg:{{ .theme.wine }} bg:{{ .theme.pink }}"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncate_to_repo = true
+truncation_symbol = "…/"
+read_only = " \U000f033e"
+read_only_style = "fg:{{ .theme.err }} bg:{{ .theme.pink }}"
+
+[directory.substitutions]
+"Documents" = "\U000f0219 "
+
+[character]
+success_symbol = "[❯](bold {{ .theme.fuchsia }})"
+error_symbol = "[❯](bold {{ .theme.err }})"
+vimcmd_symbol = "[❮](bold {{ .theme.purple }})"
+
+[git_branch]
+symbol = " "
+style = "bg:{{ .theme.lavender }}"
+format = '[[ $symbol $branch ](fg:{{ .theme.ink }} bg:{{ .theme.lavender }})]($style)'
+
+[git_status]
+style = "bg:{{ .theme.lavender }}"
+format = '[[($all_status$ahead_behind )](bold fg:{{ .theme.wine }} bg:{{ .theme.lavender }})]($style)'
+
+[nodejs]
+symbol = " "
+style = "bg:{{ .theme.blush }}"
+format = '[[ $symbol ($version) ](fg:{{ .theme.wine }} bg:{{ .theme.blush }})]($style)'
+
+[rust]
+symbol = " "
+style = "bg:{{ .theme.blush }}"
+format = '[[ $symbol ($version) ](fg:{{ .theme.wine }} bg:{{ .theme.blush }})]($style)'
+
+[golang]
+symbol = " "
+style = "bg:{{ .theme.blush }}"
+format = '[[ $symbol ($version) ](fg:{{ .theme.wine }} bg:{{ .theme.blush }})]($style)'
+
+[python]
+symbol = " "
+style = "bg:{{ .theme.blush }}"
+format = '[[ $symbol ($version) ](fg:{{ .theme.wine }} bg:{{ .theme.blush }})]($style)'
+
+[conda]
+symbol = " "
+style = "bg:{{ .theme.blush }}"
+format = '[[ $symbol $environment ](fg:{{ .theme.wine }} bg:{{ .theme.blush }})]($style)'
+ignore_base = true
+
+[cmd_duration]
+min_time = 2000
+style = "bg:{{ .theme.rose }}"
+format = "[[ \uf520 $duration ](fg:{{ .theme.wine }} bg:{{ .theme.rose }})]($style)"

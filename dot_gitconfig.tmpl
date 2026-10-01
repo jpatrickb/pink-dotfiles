@@ -1,0 +1,35 @@
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
+[core]
+	autocrlf = input
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true          # use n / N to move between diff sections
+	line-numbers = true
+	light = true
+	true-color = always      # works over ssh, where COLORTERM isn't forwarded
+	syntax-theme = rose-pine-dawn
+	minus-style                   = syntax "{{ .theme.diff_del_bg }}"
+	minus-non-emph-style          = syntax "{{ .theme.diff_del_bg }}"
+	minus-emph-style              = syntax "{{ .theme.diff_del_emph }}"
+	plus-style                    = syntax "{{ .theme.diff_add_bg }}"
+	plus-non-emph-style           = syntax "{{ .theme.diff_add_bg }}"
+	plus-emph-style               = syntax "{{ .theme.diff_add_emph }}"
+	line-numbers-minus-style      = "{{ .theme.err }}"
+	line-numbers-plus-style       = "{{ .theme.ok }}"
+	line-numbers-zero-style       = "{{ .theme.muted }}"
+	line-numbers-left-style       = "{{ .theme.pink }}"
+	line-numbers-right-style      = "{{ .theme.pink }}"
+	file-style                    = "bold {{ .theme.fuchsia }}"
+	file-decoration-style         = "{{ .theme.fuchsia }} ul"
+	hunk-header-decoration-style  = "{{ .theme.pink }} box"
+	hunk-header-style             = file line-number syntax
+[merge]
+	conflictstyle = zdiff3
+[diff]
+	colorMoved = default
+[init]
+	defaultBranch = main

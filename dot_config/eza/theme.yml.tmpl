@@ -1,0 +1,48 @@
+# eza colour theme (replaces LS_COLORS/vivid)
+colourful: true
+filekinds:
+  normal:      {foreground: "{{ .theme.text }}"}
+  directory:   {foreground: "{{ .theme.purple }}", is_bold: true}
+  symlink:     {foreground: "{{ .theme.fuchsia }}"}
+  executable:  {foreground: "{{ .theme.ok }}", is_bold: true}
+  pipe:        {foreground: "{{ .theme.warn }}"}
+  socket:      {foreground: "{{ .theme.warn }}"}
+  special:     {foreground: "{{ .theme.hotpink }}"}
+perms:
+  user_read:           {foreground: "{{ .theme.ok }}"}
+  user_write:          {foreground: "{{ .theme.warn }}"}
+  user_execute_file:   {foreground: "{{ .theme.fuchsia }}"}
+  user_execute_other:  {foreground: "{{ .theme.fuchsia }}"}
+  group_read:          {foreground: "{{ .theme.ok }}"}
+  group_write:         {foreground: "{{ .theme.warn }}"}
+  group_execute:       {foreground: "{{ .theme.fuchsia }}"}
+  other_read:          {foreground: "{{ .theme.ok }}"}
+  other_write:         {foreground: "{{ .theme.warn }}"}
+  other_execute:       {foreground: "{{ .theme.fuchsia }}"}
+size:
+  number_byte:  {foreground: "{{ .theme.muted }}"}
+  number_kilo:  {foreground: "{{ .theme.muted }}"}
+  number_mega:  {foreground: "{{ .theme.fuchsia }}"}
+  number_giga:  {foreground: "{{ .theme.purple }}"}
+  number_huge:  {foreground: "{{ .theme.err }}"}
+  unit_byte:    {foreground: "{{ .theme.muted }}"}
+  unit_kilo:    {foreground: "{{ .theme.muted }}"}
+  unit_mega:    {foreground: "{{ .theme.fuchsia }}"}
+  unit_giga:    {foreground: "{{ .theme.purple }}"}
+  unit_huge:    {foreground: "{{ .theme.err }}"}
+users:
+  user_you:           {foreground: "{{ .theme.wine }}"}
+  user_root:          {foreground: "{{ .theme.err }}"}
+  user_other:         {foreground: "{{ .theme.muted }}"}
+  group_yours:        {foreground: "{{ .theme.wine }}"}
+  group_other:        {foreground: "{{ .theme.muted }}"}
+git:
+  new:         {foreground: "{{ .theme.ok }}"}
+  modified:    {foreground: "{{ .theme.warn }}"}
+  deleted:     {foreground: "{{ .theme.err }}"}
+  renamed:     {foreground: "{{ .theme.purple }}"}
+  ignored:     {foreground: "{{ .theme.muted }}"}
+date:          {foreground: "{{ .theme.muted }}"}
+header:        {foreground: "{{ .theme.fuchsia }}", is_underline: true}
+punctuation:   {foreground: "{{ .theme.pink }}"}
+symlink_path:  {foreground: "{{ .theme.fuchsia }}"}

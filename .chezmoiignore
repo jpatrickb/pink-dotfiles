@@ -1,0 +1,14 @@
+README.md
+bootstrap.sh
+test
+{{ if .isHPC }}
+# Cluster: bash + user-space binaries only. No Homebrew, no zsh config.
+.zshrc
+.zprofile
+.config/pink-theme
+{{ else }}
+# Mac: zsh. The cluster-only bash snippet, ble.sh config and tmux are not needed.
+.config/shell/pink.bash
+.blerc
+{{ end }}
+Brewfile

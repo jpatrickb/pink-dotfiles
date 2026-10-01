@@ -1,0 +1,64 @@
+# ── zsh (Mac) ───────────────────────────────────────────────────
+export PATH="$HOME/.local/bin:$HOME/.atuin/bin:$PATH"
+export EDITOR="nano"
+export VISUAL="nano"
+export COLORTERM="${COLORTERM:-truecolor}"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT="-c"
+
+# ── Aliases ─────────────────────────────────────────────────────
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --group-directories-first --icons'
+  alias ll='eza -l --group-directories-first --icons --git'
+  alias la='eza -la --group-directories-first --icons --git'
+  alias lt='eza --tree --group-directories-first --icons'
+fi
+command -v bat >/dev/null 2>&1 && alias cat='bat --paging=never'
+
+# ── Prompt ──────────────────────────────────────────────────────
+eval "$(starship init zsh)"
+
+# ── Completion ──────────────────────────────────────────────────
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+
+# ── Tools ───────────────────────────────────────────────────────
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"   # z, zi
+
+# fzf: Ctrl-T files, Alt-C cd, pink colours
+if command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh)
+  export FZF_DEFAULT_OPTS="
+    --height 40% --layout=reverse --border
+    --color=fg:{{ .theme.text }},bg:{{ .theme.bg }},hl:{{ .theme.fuchsia }}
+    --color=fg+:{{ .theme.wine }},bg+:{{ .theme.blush }},hl+:{{ .theme.fuchsia }}
+    --color=border:{{ .theme.pink }},header:{{ .theme.purple }},gutter:{{ .theme.bg }}
+    --color=spinner:{{ .theme.warn }},info:{{ .theme.purple }},pointer:{{ .theme.fuchsia }}
+    --color=marker:{{ .theme.hotpink }},prompt:{{ .theme.purple }}"
+fi
+
+# atuin: searchable shell history (Ctrl-R, and Up arrow)
+command -v atuin >/dev/null 2>&1 && eval "$(atuin init zsh)"
+
+# ── Suggestions + syntax highlighting (keep LAST) ───────────────
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg={{ .theme.muted }}'
+[ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && \
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[command]='fg={{ .theme.ok }}'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg={{ .theme.ok }}'
+ZSH_HIGHLIGHT_STYLES[alias]='fg={{ .theme.ok }}'
+ZSH_HIGHLIGHT_STYLES[function]='fg={{ .theme.ok }}'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg={{ .theme.ok }},underline'
+ZSH_HIGHLIGHT_STYLES[reserved-word]='fg={{ .theme.purple }}'
+ZSH_HIGHLIGHT_STYLES[path]='fg={{ .theme.wine }},underline'
+ZSH_HIGHLIGHT_STYLES[globbing]='fg={{ .theme.fuchsia }}'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg={{ .theme.fuchsia }}'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg={{ .theme.fuchsia }}'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg={{ .theme.warn }}'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg={{ .theme.warn }}'
+ZSH_HIGHLIGHT_STYLES[comment]='fg={{ .theme.muted }}'
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg={{ .theme.err }}'
+[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && \
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

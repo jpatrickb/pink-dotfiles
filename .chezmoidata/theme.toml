@@ -1,0 +1,34 @@
+# Single source of truth for the colour theme. Every themed config is a
+# template that reads from here, so re-theming means editing this file only.
+# Surfaces/body text come from the Lucy "Pink" VS Code theme; accents are
+# darkened for text contrast and extended with fuchsia + purple.
+[theme]
+  # surfaces
+  bg        = "#faeeed"
+  surface   = "#fde4e3"
+  statusbar = "#ffdddd"
+  text      = "#602437"
+  # pastel fills (backgrounds of pills, selections)
+  pink      = "#eb849e"
+  lavender  = "#c9a7ee"
+  blush     = "#fec9f1"
+  rose      = "#ffafc9"
+  # text-safe accents (>= 4.1:1 on bg)
+  muted     = "#a8556b"
+  hotpink   = "#d9506f"
+  fuchsia   = "#c2186f"
+  purple    = "#7a3fb5"
+  wine      = "#89023e"
+  ok        = "#237a5c"
+  warn      = "#a8610f"
+  # text on lavender pills
+  ink       = "#3d1f63"
+  # diff backgrounds
+  diff_add_bg     = "#e3f1e6"
+  diff_add_emph   = "#c5e3cc"
+  diff_del_bg     = "#fbd5dc"
+  diff_del_emph   = "#f4aebb"
+  # error / failure
+  err       = "#b3001b"
+  # text on the purple OS pill
+  os_fg     = "#fff0f6"

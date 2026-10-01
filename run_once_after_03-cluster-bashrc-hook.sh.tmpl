@@ -1,0 +1,11 @@
+{{ if .isHPC -}}
+#!/bin/bash
+# Add a one-line hook to ~/.bashrc (leaving the cluster's own content intact),
+# and make sure login shells read ~/.bashrc.
+LINE='[ -f "$HOME/.config/shell/pink.bash" ] && . "$HOME/.config/shell/pink.bash"   # pink dotfiles'
+touch "$HOME/.bashrc"
+grep -qF '# pink dotfiles' "$HOME/.bashrc" || printf '\n%s\n' "$LINE" >> "$HOME/.bashrc"
+if [ ! -f "$HOME/.bash_profile" ] && [ ! -f "$HOME/.profile" ]; then
+  printf '[ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"\n' > "$HOME/.bash_profile"
+fi
+{{- end }}

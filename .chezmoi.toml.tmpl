@@ -1,0 +1,8 @@
+{{- $name := promptStringOnce . "name" "Your full name (for git commits)" -}}
+{{- $email := promptStringOnce . "email" "Your email (for git commits)" -}}
+{{- $hpc := promptBoolOnce . "isHPC" "Is this a shared cluster (no sudo, bash)" (ne .chezmoi.os "darwin") -}}
+
+[data]
+  name = {{ $name | quote }}
+  email = {{ $email | quote }}
+  isHPC = {{ $hpc }}

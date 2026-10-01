@@ -1,0 +1,5 @@
+# Press Enter to run the selected history entry (Tab to edit it first).
+enter_accept = true
+# Local-only history; no account/sync.
+auto_sync = false
+update_check = false

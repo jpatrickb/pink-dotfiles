@@ -1,0 +1,39 @@
+# ── bash (cluster) ──────────────────────────────────────────────
+# Sourced from ~/.bashrc (a one-line hook is added by the install script, so
+# the cluster's own .bashrc -- module loads etc. -- is left alone).
+# Interactive shells only: never break scp / rsync / batch jobs.
+case $- in *i*) ;; *) return 0 2>/dev/null || exit 0 ;; esac
+
+export PATH="$HOME/.local/bin:$HOME/.atuin/bin:$HOME/.fzf/bin:$PATH"
+export EDITOR="${EDITOR:-nano}"
+# ssh doesn't forward COLORTERM; the terminal on her Mac is true-colour.
+export COLORTERM="${COLORTERM:-truecolor}"
+
+# ble.sh (autosuggestions + syntax highlighting). Must load first, attach last.
+[ -f "$HOME/.local/share/blesh/ble.sh" ] && source "$HOME/.local/share/blesh/ble.sh" --noattach
+
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --group-directories-first'
+  alias ll='eza -l --group-directories-first --git'
+  alias la='eza -la --group-directories-first --git'
+  alias lt='eza --tree --group-directories-first'
+fi
+command -v bat >/dev/null 2>&1 && alias cat='bat --paging=never'
+
+command -v starship >/dev/null 2>&1 && eval "$(starship init bash)"
+command -v zoxide   >/dev/null 2>&1 && eval "$(zoxide init bash)"
+
+if command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --bash)"
+  export FZF_DEFAULT_OPTS="
+    --height 40% --layout=reverse --border
+    --color=fg:{{ .theme.text }},bg:{{ .theme.bg }},hl:{{ .theme.fuchsia }}
+    --color=fg+:{{ .theme.wine }},bg+:{{ .theme.blush }},hl+:{{ .theme.fuchsia }}
+    --color=border:{{ .theme.pink }},header:{{ .theme.purple }},gutter:{{ .theme.bg }}
+    --color=spinner:{{ .theme.warn }},info:{{ .theme.purple }},pointer:{{ .theme.fuchsia }}
+    --color=marker:{{ .theme.hotpink }},prompt:{{ .theme.purple }}"
+fi
+
+command -v atuin >/dev/null 2>&1 && eval "$(atuin init bash)"
+
+[[ ${BLE_VERSION-} ]] && ble-attach

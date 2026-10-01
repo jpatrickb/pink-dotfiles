@@ -1,0 +1,10 @@
+{{ if and (eq .chezmoi.os "darwin") (not .isHPC) -}}
+#!/bin/bash
+# Brewfile hash: {{ include "Brewfile" | sha256sum }}
+set -euo pipefail
+if ! command -v brew >/dev/null 2>&1; then
+  [ -x /opt/homebrew/bin/brew ] || { echo "Homebrew not found -- run bootstrap.sh first." >&2; exit 1; }
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+brew bundle --file="{{ .chezmoi.sourceDir }}/Brewfile"
+{{- end }}
