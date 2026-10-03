@@ -6,6 +6,7 @@ test
 .zshrc
 .zprofile
 .config/pink-theme
+Library
 {{ else }}
 # Mac: zsh. The cluster-only bash snippet, ble.sh config and tmux are not needed.
 .config/shell/pink.bash

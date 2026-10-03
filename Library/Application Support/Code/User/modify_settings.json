@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+# chezmoi modify_ script: ensure VS Code's integrated terminal uses a Nerd Font
+# (needed for prompt + eza icons). Receives the current settings.json on stdin.
+# Text insert, not a JSON round-trip, because settings.json is JSONC (comments,
+# trailing commas). Only adds the key if it's absent -- never overrides a choice
+# already made, never touches any other setting.
+import re
+import sys
+
+KEY = "terminal.integrated.fontFamily"
+ENTRY = '"%s": "JetBrainsMono Nerd Font"' % KEY
+
+src = sys.stdin.read()
+
+if KEY in src:
+    sys.stdout.write(src)
+elif not src.strip():
+    sys.stdout.write("{\n  %s\n}\n" % ENTRY)
+else:
+    m = re.match(r"(\s*(?://[^\n]*\n\s*)*)\{", src)
+    if not m:  # unrecognised shape: leave it alone
+        sys.stdout.write(src)
+    else:
+        rest = src[m.end():]
+        comma = "" if re.match(r"\s*\}", rest) else ","
+        tail = rest if comma or rest.startswith("\n") else "\n" + rest
+        sys.stdout.write(src[: m.end()] + "\n  " + ENTRY + comma + tail)

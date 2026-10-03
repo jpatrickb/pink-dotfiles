@@ -1,0 +1,17 @@
+{{ if and (eq .chezmoi.os "darwin") (not .isHPC) -}}
+#!/bin/bash
+# Terminal.app: use JetBrainsMono Nerd Font in the default profile so prompt and
+# eza icons render. Best-effort -- macOS may ask to let this app control Terminal;
+# if that's declined the manual steps are printed and the rest of apply continues.
+# Runs once, and again only if this script changes.
+if ! compgen -G "$HOME/Library/Fonts/JetBrainsMono*NerdFont-Regular.ttf" >/dev/null; then
+  echo "Nerd Font not installed yet -- skipping Terminal.app font (re-run chezmoi apply after install)."
+  exit 0
+fi
+osascript <<'OSA' >/dev/null 2>&1 || echo "Couldn't set Terminal.app's font automatically. Manual: Terminal > Settings > Profiles > Text > Font > Change... > JetBrainsMono Nerd Font."
+tell application "Terminal"
+  set font name of default settings to "JetBrainsMonoNF-Regular"
+end tell
+OSA
+exit 0
+{{- end }}
